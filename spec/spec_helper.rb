@@ -1,5 +1,5 @@
-require_relative '../lib/docking_station'
-require_relative  '../lib/bike'
+require 'docking_station'
+require  'bike'
 
 RSpec.configure do |config|
  # Use color in STDOUT
@@ -11,4 +11,3 @@ RSpec.configure do |config|
  # Use the specified formatter
  config.formatter = :documentation # :progress, :html, :textmate
 end
- 

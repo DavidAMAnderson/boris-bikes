@@ -1,16 +1,12 @@
-require_relative 'docking_station'
-
 class Bike
 
-  def working?
-    true
+attr_accessor :broken
+
+  def initialize
+    @broken = false
   end
 
   def is_broken
    @broken = true
-  end
-
-  def broken?
-    @broken
   end
 end

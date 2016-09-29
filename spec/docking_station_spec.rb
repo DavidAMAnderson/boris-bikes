@@ -7,7 +7,7 @@ describe DockingStation do
 
   it 'releases working bikes' do
     @bikes = Bike.new
-    expect(@bikes).to be_working
+    expect(@bikes).to be_truthy
   end
 
   it 'docks something' do
@@ -16,32 +16,27 @@ describe DockingStation do
     expect(subject.dock(@bikes)).to match_array(@bikes)
   end
 
-  it 'returns docked bikes' do
-    @bikes = Bike.new
-    subject.dock(@bikes)
-
-    expect(subject.release_bike).to eq @bikes
-  end
-
   describe '#release_bike' do
     it 'raises an error when there are no bikes available' do
       expect { subject.release_bike }.to raise_error 'No bikes available'
     end
 
     it 'raises an error when releasing a broken bike' do
-      @bikes = Bike.new
-      @bikes.is_broken
-      subject.dock(@bikes)
-      expect { subject.release_bike }.to raise_error 'This bike is broken'
+      bike = Bike.new
+      docking_station = DockingStation.new
+      bike.is_broken
+      docking_station.dock(bike)
+      expect { docking_station.release_bike }.to raise_error 'This bike is broken'
     end
 
     it 'releases a working if there is a broken bike' do
-      @broken_bikes = Bike.new
-      @broken_bikes.is_broken
-      subject.dock(@broken_bikes)
-      @working_bikes = Bike.new
-      subject.dock(@working_bikes)
-      expect { subject.release_bike}.to eq @working_bikes
+      broken_bike = Bike.new
+      broken_bike.is_broken
+      docking_station = DockingStation.new
+      docking_station.dock(broken_bike)
+      working_bike = Bike.new
+      docking_station.dock(working_bike)
+      expect(docking_station.release_working_bike).to eq(working_bike)
     end
   end
 
@@ -62,9 +57,7 @@ describe DockingStation do
     subject { DockingStation.new}
     let(:bike) {Bike.new} # bike = Bike.new
     it 'Defaults capacity' do
-      described_class::DEFAULT_CAPACITY.times do
-        subject.dock(bike)
-      end
+      DockingStation::DEFAULT_CAPACITY.times {subject.dock(bike)}
       expect{subject.dock(bike)}.to raise_error 'Docking station full'
     end
   end
