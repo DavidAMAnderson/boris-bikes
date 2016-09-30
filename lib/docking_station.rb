@@ -15,6 +15,7 @@ class DockingStation
   end
 
   def release_working_bike
+    fail "No bikes available" if @bikes.count <=0
     @bikes.pop
   end
 
