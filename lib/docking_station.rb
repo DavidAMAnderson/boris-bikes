@@ -3,7 +3,7 @@ require './lib/bike'
 
 class DockingStation
 
-  attr_reader :bike
+  #attr_reader :bike
   attr_accessor :capacity
 
   DEFAULT_CAPACITY = 20
@@ -19,9 +19,9 @@ class DockingStation
     @bikes.pop
   end
 
-  def release_bike
-    fail "No bikes available" if empty?
-    fail "This bike is broken" if @broken_bikes[0].broken
+  def release_broken_bike
+    fail "No bikes available" if @broken_bikes.count <=0
+    @broken_bikes.pop
   end
 
   def dock(bike)
@@ -38,12 +38,12 @@ class DockingStation
   attr_reader :bikes, :broken_bikes
 
   def full?
-    @bikes.count >= @capacity
+    (@bikes.count + @broken_bikes.count) >= @capacity
   end
 
-  def empty?
-      (@bikes.count + @broken_bikes.count) <= 0
-  end
+  # def empty?
+  #     (@bikes.count + @broken_bikes.count) <= 0
+  # end
 
 
 end
