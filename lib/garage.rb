@@ -35,12 +35,11 @@ class Garage
   # end
 
   def fix_bike
-    @broken_bikes.each { |bike|
+    @broken_bikes.each do |bike|
       bike.broken = false
       @bikes << bike
-      @broken_bikes.delete(bike)
-      puts "Bikes are fixed"
-    }
+    end
+    @broken_bikes.clear
   end
 
 
