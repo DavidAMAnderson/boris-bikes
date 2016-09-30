@@ -2,6 +2,7 @@ require 'docking_station'
 require 'bike'
 require 'van'
 require 'garage'
+require_relative './support/shared_examples_for_bike_container.rb'
 
 RSpec.configure do |config|
  # Use color in STDOUT
